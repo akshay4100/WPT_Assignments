@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" ></script>
+    <script>
+        window.addEventListener('DOMContentLoaded',()=>{
+            console.log("Dom loaded");
+			let t1 = document.querySelector("#t1")
+            t1.addEventListener('blur',()=>
+			{
+                console.log("blur on empid");
+
+                let t1=document.querySelector("#t1").value;
+
+                 if(t1==0){
+                    document.querySelector("#t2").value = "";
+                    document.querySelector("#t3").value = "";
+                    document.querySelector("#msg").innerHTML = "Employee Details not found";
+                }
+                else if(t1%2==0){
+                    document.querySelector("#t2").value = 2;
+                    document.querySelector("#t3").value = "Mumbai";
+                    document.querySelector("#msg").innerHTML = "Employee Details found";
+                }
+                else if(t1%2!=0){
+                    document.querySelector("#t2").value = 3;
+                    document.querySelector("#t3").value = "Pune";
+                    $('#msg').html("Employee Details found");
+                }
+                
+            });
+            
+        });
+
+
+
+
+    </script>
+</head>
+<body>
+   EmpID<input type="text" placeholder="EmpID" id="t1"/> <span id="msg">Message</span><br/>
+    DeptID<input type="text" placeholder="DeptID" id="t2"/><br/>
+   Location <input type="text" placeholder="Location" id="t3"/>
+
+</body>
+</html>

@@ -1,0 +1,223 @@
+<html>
+    <head>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+        <script>
+            $(()=>{
+
+                $("#insertbtn").click(()=>{
+                    console.log("Blur event empid");
+
+                    let input = {eid:$("#empid").val(),
+                                ename:$("#empname").val(),
+                                dname:$("#deptname").val(),
+                                esal:$("#sal").val()
+                            };
+                    console.log(input);
+
+                    let parameterstothefunction =
+                    {
+                        data:input,
+                        url:"http://localhost:800/insertEmp",
+                        dataType:"JSON",
+                        type:"get",
+                        success:(outputdata)=>{
+                            
+                            console.log("data given by server"+outputdata.status);
+                            if (outputdata.status == true) {
+
+                                $('#msg').html(outputdata.msg);
+                                }
+                                else {
+
+                                $('#msg').html(outputdata.msg);
+                                }
+
+                            
+                       
+                        },
+                        error:(outputdata)=>{
+                            console.log("fail to connect server"+outputdata.status);}
+                    };
+                    $.ajax(parameterstothefunction);
+
+                });
+
+
+
+
+                $("#updatebtn").click(()=>{
+                    console.log("Blur event empid");
+
+                    let input = {eid:$("#empid").val(),
+                                ename:$("#empname").val(),
+                                dname:$("#deptname").val(),
+                                esal:$("#sal").val()
+                            };
+                    console.log(input);
+
+                    let parameterstothefunction =
+                    {
+                        data:input,
+                        url:"http://localhost:800/updateEmp",
+                        dataType:"JSON",
+                        type:"get",
+                        success:(outputdata)=>{
+                            
+                            console.log("data given by server"+outputdata.status);
+                            if (outputdata.status == true) {
+
+                                $('#msg').html(outputdata.msg);
+                                }
+                                else {
+
+                                $('#msg').html(outputdata.msg);
+                                }
+
+                            
+                       
+                        },
+                        error:(outputdata)=>{
+                            console.log("fail to connect server"+outputdata.status);}
+                    };
+                    $.ajax(parameterstothefunction);
+
+                });
+
+
+
+
+
+
+
+                $("#empid").blur(()=>{
+                    console.log("Blur event empid");
+
+                    let input = {eid:$("#empid").val()};
+                    console.log(input);
+
+                    let parameterstothefunction =
+                    {
+                        data:input,
+                        url:"http://localhost:800/showEmpDetails",
+                        dataType:"JSON",
+                        type:"get",
+                        success:(outputdata)=>{
+                            
+                            console.log("data given by server"+outputdata.status);
+                            if(outputdata.status == true)
+                            {
+                                $("#empname").val(outputdata.employeename);
+                                $("#deptname").val(outputdata.employeedeptname);
+                                $("#sal").val(outputdata.employeesal);
+                                $("#msg").html(outputdata.msg);
+                                $("#empid").prop("disabled",true);
+                                $("#insertbtn").prop("disabled",false);
+
+                            }
+                            else{
+                                console.log("Not FoundS");
+                                $("#msg").html(outputdata.msg);
+                                $("#updatebtn").prop("disabled",false);
+                            }
+
+                            
+                       
+                        },
+                        error:(outputdata)=>{
+                            console.log("fail to connect server"+outputdata.status);}
+                    };
+                    $.ajax(parameterstothefunction);
+
+                });
+
+
+
+
+                
+                $("#showallbtn").click(()=>{
+                    console.log("click event empid");
+
+                    let input = {eid:$("#empid").val()};
+                    console.log(input);
+
+                    let parameterstothefunction =
+                    {
+                        data:{},
+                        url:"http://localhost:800/showAllDetail",
+                        dataType:"JSON",
+                        type:"get",
+                        success:(outputdata)=>{
+                            
+                            let str=""
+                            emp=outputdata
+                           
+                               
+                                for (let index = 0; index < emp.length; index++) {
+                                   str+="<br/>"+emp[index].empid+" " +emp[index].ename+" " +emp[index].dname+" " +emp[index].sal;
+                                    
+                                }
+                                $("#msg1").html(str);
+                            
+                            
+                       
+                        },
+                        error:(outputdata)=>{
+                            console.log("fail to connect server");}
+                    };
+                    $.ajax(parameterstothefunction);
+
+                });
+
+
+
+                $('#resetbtn').click(() => {
+                    console.log('reset button clicked');
+
+                    $('#empid').val("");
+                    $('#empname').val("");
+                    $('#deptname').val("");
+                    $('#sal').val("");
+                    $("#empid").prop('disabled', false);
+                    $('#msg').html("Message");
+                    $("#updatebtn").prop('disabled', false);
+                });
+
+
+
+                
+
+
+
+
+
+
+
+            });
+        </script>
+    </head>
+
+    <body style="background-color: rgb(70, 135, 163);">
+        
+        <h1>Employee Details</h1>
+
+        <hr>
+        <input type="text" id="empid" placeholder="Employee ID"><br>
+        <input type="text" id="empname" placeholder="Employee Name"><br>
+        <input type="text" id="deptname" placeholder="Employee Department Name"><br>
+        <input type="text" id="sal" placeholder="Employee Salary">
+
+        <hr>
+        <input type="button"  id="insertbtn" value="Insert">
+        <input type="button"  id="updatebtn" value="Update">
+        <input type="button"  id="resetbtn" value="Reset">
+        <input type="button"  id="showallbtn" value="ShowAll">
+        <hr>
+        <p id="msg" style="color: rgb(8, 245, 16);">Status</p>
+        <hr>
+        <p id="msg1" style="color: rgb(8, 245, 16);">Show Detail Here</p>
+        <hr>
+
+    </body>
+</html>

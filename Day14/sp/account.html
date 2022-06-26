@@ -1,0 +1,56 @@
+<html>
+    <head>
+    <script
+        src="https://code.jquery.com/jquery-3.6.0.js">
+    </script>
+        
+    <script>
+        $(()=>{
+            $("#acno").blur(
+                ()=>{
+
+                console.log("Blur event created");
+
+                let input ={accountno:$("#acno").val()};
+
+                let accountdetailsfunction=
+                {
+                    data:input,
+                    url:"http://localhost:800/account",
+                    type:"get",
+                    dataType:"JSON",
+                    success:(datagivenbyserver)=>{
+                        console.log("Found"+datagivenbyserver.status);
+
+                        if(datagivenbyserver.status == true )
+                              {
+                                       $("#balance").val(datagivenbyserver.balance);
+                                       $("#msg").text(datagivenbyserver.msg); //makeup
+                              } 
+                              else
+                              {
+                                    $("#balance").val(datagivenbyserver.balance);
+                                    $("#msg").text(datagivenbyserver.msg);
+                              }
+                    },
+                    error:(datagivenbyserver)=>{
+                        console.log("Not Found"+datagivenbyserver.status);
+                    }
+                };
+                console.log("is the function working");
+                $.ajax(accountdetailsfunction);
+            });
+        });
+    </script>
+    </head>
+
+    <body>
+        <h1>Account Details</h1>
+        <hr>
+        <input type="text" id="acno" placeholder="Acount number">
+        <br>
+        <input type="text" id="balance" placeholder="Available Balance">
+        <p id="msg">Message</p>
+
+    </body>
+</html>

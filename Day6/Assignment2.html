@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+   <script>
+    
+window.addEventListener('DOMContentLoaded',()=>{
+    console.log("DOMContentLoaded Event created");
+
+    const emp=[
+            {
+                empid:1,
+                empname:'A',
+                deptid:01,
+                email:'a@1.com'
+
+            },{
+                empid:2,
+                empname:'B',
+                deptid:02,
+                email:'b@2.com'
+            },{
+                empid:3,
+                empname:'C',
+                deptid:03,
+                email:'c@3.com'
+            },{
+                empid:4,
+                empname:'D',
+                deptid:01,
+                email:'d@1.com'
+            }
+        ];
+
+//blur event
+    const empid=document.querySelector("#empid");
+    empid.addEventListener('blur',()=>{
+        console.log("empid event");
+        let empid=document.querySelector("#empid").value;
+        
+        let output = getEmployeeDetais(empid);
+
+        if(output.result)
+        {
+            document.querySelector("#empname").value=output.empdetails.empname;
+            document.querySelector("#deptid").value=output.empdetails.deptid;
+            document.querySelector("#email").value=output.empdetails.email;
+
+            document.querySelector("#add").disabled=true;
+            document.querySelector("#modify").disabled=false;
+            document.querySelector("#remove").disabled=false;
+            
+            
+        }
+        else
+        {
+            document.querySelector("#empname").value="";
+            document.querySelector("#deptid").value="";
+            document.querySelector("#email").value="";
+
+            document.querySelector("#add").disabled=false;
+            document.querySelector("#modify").disabled=true;
+            document.querySelector("#remove").disabled=true;
+            
+        }
+
+    });
+
+    
+
+//viewall event
+    const viewall=document.querySelector("#viewall");
+    viewall.addEventListener('click',()=>{
+        console.log("viewall event");
+
+        let msg=showAllEmp();
+
+        document.querySelector("#x").innerHTML="Showing Employee Details ";
+        document.querySelector("#y").innerHTML="Employee Details : <br>"+msg;
+        
+
+    });
+
+    
+//add event
+    const add=document.querySelector("#add");
+    add.addEventListener('click',()=>{
+
+        console.log("add event");
+        let empid=document.querySelector("#empid").value;
+         let output = isSame(empid);
+         let newWEmp = 
+         {
+            empid:document.querySelector("#empid").value,
+            empname:document.querySelector("#empname").value,
+            deptid:document.querySelector("#deptid").value,
+            email:document.querySelector("#email").value,
+         };
+         if(output)
+         {
+            emp.push(newWEmp);
+            document.querySelector("#x").innerHTML="New Employee  Added";
+         }
+         else
+            document.querySelector("#x").innerHTML="Cannot Add Employee With Same EmpNo";
+    });
+
+    function isSame(empid)
+    {
+        console.log("isSame function");
+        let output =true;
+        for(let i=0;i<emp.length;i++)
+        {
+            if(emp[i].empid==empid)
+            {
+                output=false;
+                return output;
+            }
+        }
+        return output;
+    }
+//viewondept event
+    const viewondept=document.querySelector("#viewondept");
+    viewondept.addEventListener('click',()=>{
+        console.log("viewondept event");
+        let deptid=document.querySelector("#deptid").value;
+        let msg= showDeptwise(deptid);
+
+        document.querySelector("#x").innerHTML="Showing Employee Details ";
+        document.querySelector("#y").innerHTML="Employee Details : <br>"+msg;
+        
+        
+    });
+
+    
+
+//modify event
+    const modify=document.querySelector("#modify");
+    modify.addEventListener('click',()=>{
+        console.log("modify event");
+        let empid=document.querySelector("#modify").empid;
+        let modifiedDetail={
+            empid:document.querySelector("#empid").value,
+            empname:document.querySelector("#empname").value,
+            deptid:document.querySelector("#deptid").value,
+            email:document.querySelector("#email").value,
+        };
+
+        let output = modifyDetail(modifiedDetail);
+        if(output)
+         {
+            document.querySelector("#x").innerHTML="Employee Detail Modified";
+         }
+         else
+            document.querySelector("#x").innerHTML="Already Modified";
+    });
+    
+    
+//remove event
+    const remove = document.querySelector("#remove");
+    remove.addEventListener('click',()=>{
+        let empid = document.querySelector("#empid").value;
+        let output = deleteEmployee(empid);
+                   
+        if(output)
+             document.querySelector("#x").innerHTML="Employee Detail Deleted";
+
+        else
+            document.querySelector("#x").innerHTML="Employee Detail not found";
+                                
+    });
+	
+	
+	function showAllEmp()
+    {
+        console.log("showAllEmp function");
+        let msg="";
+        for(let i=0;i<emp.length;i++)
+        {
+            console.log("showAllEmp function");
+            msg+="<br> Employee ID : "+emp[i].empid+", Employee Name : "+emp[i].empname+", Department ID : "+emp[i].deptid+", Email ID : "+emp[i].email;
+           
+        }
+        return msg;
+    }
+	
+	
+	function getEmployeeDetais(empid)
+    {
+        console.log("getEmployeeDetais function called");
+        let output = {result:false,empdetails:{}};
+        for(let i=0;i<emp.length;i++)
+        {
+            if(emp[i].empid==empid)
+            {
+                output.result=true;
+                output.empdetails=emp[i];
+                return output;
+            }
+        }
+        return output;
+    }
+
+	
+	
+	function showDeptwise(deptid)
+    {
+        console.log("showDeptwise function");
+        let msg="";
+        for(let i=0;i<emp.length;i++)
+        {
+            if(emp[i].deptid == deptid)
+            {
+                console.log("showDeptwise function");
+                msg+="<br> Employee ID : "+emp[i].empid+", Employee Name : "+emp[i].empname+", Department ID : "+emp[i].deptid+", Email ID : "+emp[i].email;
+            }
+        }
+        return msg;
+    }
+	
+	
+	function modifyDetail(modifiedDetail)
+    {
+        console.log("modifyDetail function called");
+        for(let i=0;i<emp.length;i++)
+        {
+            if(emp[i].empid==modifiedDetail.empid)
+            {
+                console.log();
+                emp[i].empname=modifiedDetail.empname;
+                emp[i].deptid=modifiedDetail.deptid;
+                emp[i].email=modifiedDetail.email;
+                return true;
+            }
+        }
+    }
+
+    function deleteEmployee(empid)
+    {
+        for(let i=0;i<emp.length;i++)
+        {
+            if(emp[i].empid == empid)
+            {
+                emp.splice(i,1);
+                document.querySelector("#empid").value="";
+                document.querySelector("#empname").value="";
+                document.querySelector("#deptid").value="";
+                document.querySelector("#email").value="";
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+});
+
+   </script>
+</head>
+<body>
+    <input type="text" name="" id="empid" placeholder="Employee ID">
+    <span id="x">Status</span>
+    <br> <input type="text" name="" id="empname" placeholder="Employee Name">
+    <br> <input type="text" name="" id="deptid" placeholder="Department ID">
+    <br> <input type="text" name="" id="email" placeholder="Email ID">
+    <br><br>
+    <button id="add" disabled>Add New Employee</button>
+    <button id="modify" disabled>Modify Employee Details</button>
+    <button id="remove" disabled>Remove Employee</button>
+    <button id="viewall" >View All Employee</button>
+    <button id="viewondept" >View On Deptid</button>
+    <br><br><span id="y">Show Employee Details : </span>
+</body>
+
+</html>

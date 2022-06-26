@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <script>
+      window.addEventListener('DOMContentLoaded',()=>
+      {
+        const b1 = document.querySelector("#b1");
+        b1.addEventListener('click',()=>
+        {
+          let howmanymultiple = document.querySelector("#num").value;
+          let factor=5;
+          if(document.querySelector("#fnum7").checked===true)
+          factor=7;
+          let multiple = getmultiples(howmanymultiple,factor);
+          let contents ="";
+          for(let i=0;i<multiple.length;i++)
+          contents+= "  "+multiple[i];
+          
+          document.querySelector("#msg").innerHTML=contents;
+        });
+
+        function getmultiples(num,factor)
+        {
+          let multiples =[];
+          for(let i=1;i<=num;i++)
+          multiples.push(i*factor);
+          return multiples;
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <input type="text" placeholder="number of multiples" id="num">
+    <span id="msg">we show multiples here</span>
+    <br> multiple of 5 <input type="radio" name="factornum" id="fnum5">
+    <br> multiple of 7 <input type="radio" name="factornum" id="fnum7">
+    <br><button id="b1">query</button>
+
+  </body>
+</html>
+

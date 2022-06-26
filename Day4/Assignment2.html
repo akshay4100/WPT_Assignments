@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <script>
+            window.addEventListener('DOMContentLoaded',()=>
+            {
+                let acno = document.querySelector("#acno")
+                acno.addEventListener('blur',()=>
+                {
+                    let acno = document.querySelector("#acno").value;
+                    let account=getAccountDetails(acno);
+
+                    if(account.acno != -1)
+                    {
+                        console.log("hi");
+                        document.querySelector("#pin").value=account.pin;
+                        document.querySelector("#balance").value=account.balance;
+                        document.querySelector("#email").value=account.email;
+                        document.querySelector("#msg").innerHTML="account details found";
+                    }
+                    else
+                    {
+                        document.querySelector("#pin").value="";
+                        document.querySelector("#balance").value="";
+                        document.querySelector("#email").value="";
+                        document.querySelector("#msg").innerHTML="account details not found";
+                    }
+
+                });
+                function getAccountDetails(acno)
+                {
+                    let details={};
+                    if(acno==1)
+                    {
+                        details.acno=1;
+                        details.pin=11;
+                        details.balance=10000;
+                        details.email="a@b.com";
+                    }
+                    else if(acno==2)
+                    {
+                        details.acno=1;
+                        details.pin=22;
+                        details.balance=20000;
+                        details.email="c@d.com";
+                    }
+                    else
+                    {
+                        details.acno=-1;
+                    }
+                    return details;
+
+                }
+            });
+        </script>
+    </head>
+    <body>
+        
+        <input type="text" placeholder="acno" id="acno">
+        <span id="msg">what happened to accounts</span>
+        <br><input type="text" placeholder="pin" id="pin">
+       <br> <input type="text" placeholder="balance" id="balance">
+        <br><input type="text" placeholder="email" id="email">
+
+    </body>
+</html>

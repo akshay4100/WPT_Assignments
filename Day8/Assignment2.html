@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.addEventListener('DOMContentLoaded',()=>
+        {
+            const b1=document.querySelector("#b1");
+            b1.addEventListener('click',()=>
+            {
+                document.querySelector("#msg").innerHTML =document.querySelector("#t1").value.toUpperCase();
+            });
+
+            clear.addEventListener('click',()=>
+            {
+                document.querySelector("#t1").value="" ;
+                document.querySelector("#msg").innerHTML ="Show message here" ;
+            });
+
+        });
+
+       
+           
+
+        
+    </script>
+</head>
+<body>
+    <input type="text" id="t1" placeholder="Enter Message">
+    <span id="msg">Show message here</span>
+    <br>
+    <br>
+    <button id="b1">Print Message</button>
+    <button id="clear">Clear Text</button>
+
+</body>
+</html>

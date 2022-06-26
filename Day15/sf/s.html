@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+        <script>
+            $(()=>{
+                $("#studentrn").blur(()=>{
+
+                    console.log("Blur event");
+                    let input ={sroll:$("#studentrn").val()};
+                    console.log();
+
+                    let parameterstothefunction=
+                    {
+                        data:input,
+                        url:"http://localhost:800/studentsdetail",
+                        dataType:"JSON",
+                        type:"get",
+                        success:(outputdata)=>{
+                            console.log("data given by server"+outputdata.status);
+                            if(outputdata.status==true)
+                            {
+                                $("#studentname").val(outputdata.name);
+                                $("#msg").val(outputdata.msg);
+
+                            }
+                            else
+                            {
+                                
+                                $("#msg").val(outputdata.msg);
+
+                            }
+                        },
+                        error:(outputdata)=>{
+                            console.log("fail to connect server"+outputdata.status);
+                            
+                        }
+                    };
+                    $.ajax(parameterstothefunction);
+
+
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        
+        <h1>  Students Detail  </h1>
+        <hr>
+        <input type="text" id="studentrn" placeholder="Student Roll No">
+        <input type="text" id="studentname" placeholder="Student Name"><br>
+        
+        <hr>
+        <p id="msg">Status</p>
+    </body>
+</html>

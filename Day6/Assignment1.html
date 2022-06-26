@@ -1,0 +1,169 @@
+<html>
+    <head>
+        <script>
+            window.addEventListener("DOMContentLoaded", ()=>{
+                console.log("Started");
+
+                const arr=[];
+                for (let index = 0; index <10; index++) {
+                    let x=Math.floor(Math.random()*100)+1;              
+                arr.push(x);
+                    
+                }
+
+                const t1=document.querySelector("#t1");
+                t1.addEventListener("blur", ()=>{
+                    console.log("blur event");
+                let element = document.querySelector("#t1").value;
+                if(isPresent(element))
+                {
+                    document.querySelector("#edit").disabled=false;
+                    document.querySelector("#delete").disabled=false;
+                    document.querySelector("#add").disabled=true;
+                    document.querySelector("#viewall").disabled=true;
+                    document.querySelector("#oddposition").disabled=true;
+                   
+                }
+                else
+                {
+                    document.querySelector("#edit").disabled=true;
+                    document.querySelector("#delete").disabled=true;
+                    document.querySelector("#add").disabled=false;
+                    document.querySelector("#viewall").disabled=false;
+                    document.querySelector("#oddposition").disabled=false;
+                }
+
+                });
+
+                //add event
+                const add = document.querySelector("#add");
+                add.addEventListener("click",()=>{
+                    arr.push(document.querySelector("#t1").value);
+                    document.querySelector("#add").disabled=true;
+                    document.querySelector("#msg").innerHTML="Element added";
+                });
+
+                //view all event
+
+                const viewall = document.querySelector("#viewall");
+                viewall.addEventListener("click",()=>{
+                    document.querySelector("#msg1").innerHTML="Array Elements Are : "+arr.toString();
+
+                });
+
+                // Show Odd Position Event...
+                const showOdd=document.querySelector('#oddposition');
+                showOdd.addEventListener('click',()=>{
+                    let arr1= oddposition();
+                    
+
+               document.querySelector("#msg1").innerHTML= 'Odd Positions in List are: '+arr1.toString();
+                });
+
+                
+
+                //Delete Event...
+
+                const del = document.querySelector("#delete");
+                del.addEventListener('click',()=>{
+                    let t1 = document.querySelector("#t1").value;
+                    if(deleteElement(t1))
+                    {
+                        document.querySelector("#delete").disabled=true;
+                        document.querySelector("#edit").disabled=true;
+                        document.querySelector("#msg").innerHTML='Element Deleted';
+                        document.querySelector("#msg1").innerHTML='Number '+t1+' deleted from list';
+                    }
+                    else
+                    {
+                        document.querySelector("#delete").disabled=false;
+                        document.querySelector("#edit").disabled=false;
+                        document.querySelector("#msg").innerHTML='Element NOT Deleted';
+                        document.querySelector("#msg1").innerHTML='Number '+t1+' Not found ';
+                    }
+                    
+                });
+
+               
+
+                const editId=document.querySelector("#edit");
+                editId.addEventListener('click',()=>{
+                let original= document.querySelector('#t1').value;
+                    let randomVal = Math.floor(Math.random()*100)+1;
+                    let val = prompt("Enter the Value : "+"(Suggested Value "+randomVal+" )");
+                    if(!checkNum(val)){
+                        deleteElement(original);
+                        arr.push(val);
+                    document.querySelector("#changes").innerHTML='Element Updated';
+
+                        document.querySelector("#edit").disabled=true;
+                        document.querySelector("#delete").disabled=true;
+                        
+                        document.querySelector("#msg").
+                        innerHTML='Number '+original+' changed to '+val;
+
+                    } else{
+
+                    document.querySelector("#changes").innerHTML='Cannot Update Element';
+
+                    document.querySelector("#msg").innerHTML='Number '+original+' already present in the list';
+                    }
+
+                });
+
+                function isPresent(element)
+                {
+                    for(let i=0;i<arr.length;i++)
+                    {
+                        if(element == arr[i])
+                        return true;
+                    }
+                    return false;
+                }
+
+                function oddposition()
+                {
+                    let arr1=[];
+                    for(let i =0;i<arr.length;i++){
+                        if(i%2!= 0){
+                            arr1.push(arr[i]);
+                        }
+                    }
+                    return arr1;
+                }
+
+                function deleteElement(t1)
+                {
+                    for(let i=0;i<arr.length;i++)
+                    {
+                        if(arr[i] == t1)
+                        {
+                            arr.splice(i,1);
+                            document.querySelector("#t1").value="";
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+                
+              
+		
+		        console.log(arr);
+            });
+        </script>
+    </head>
+    <body>
+        <input type="text" id="t1" typeholder="Enter the number">
+        <span id="msg">What Happened</span>
+        <br>
+        <button id="add" disabled> Add </button>
+        <button id="edit" disabled> Edit</button>
+        <button id="delete" disabled> Delete</button>
+        <button id="viewall" disabled> View All</button>
+        <button id="oddposition" disabled> Show Odd Position</button>
+        <br>
+        <span id="msg1">Data will be Shown Here</span>
+
+    </body>
+</html>

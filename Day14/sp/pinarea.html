@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.js">
+        </script>
+
+     
+        <script>
+            $(()=>{
+                $("#pin").blur(
+                ()=>{
+                    console.log("blur event occured");
+                    let ip={pin:$("#pin").val()};
+
+                    let pinareafunction=
+                    {
+                        data:ip,
+                        url: "http://localhost:800/areadetail",
+                        type:'get',
+                        dataType: "json",
+                        success:(datagivenbyserver)=>{
+                            console.log("success"+datagivenbyserver.status);
+
+                            if(datagivenbyserver.status == true )
+                              {
+                                       $("#area").val(datagivenbyserver.area);
+                                       $("#msg").text(datagivenbyserver.message); //makeup
+                              } 
+                              else
+                              {
+                                    $("#area").val(datagivenbyserver.area);
+                                    $("#msg").text(datagivenbyserver.message);
+                              }
+                        },
+                        error:(datagivenbyserver)=>{console.log("Fail to contact server")}
+                    };
+                    console.log("is the function working");
+                    $.ajax(pinareafunction);
+                });
+            });
+
+        </script>
+    </head>
+
+    <body>
+        
+        <h1>
+            Area-Pin
+        </h1>
+
+        <hr>
+        <br><br>
+        <input type="text" id="pin" placeholder="pin" style="width: 200px; height: 25px;">
+        <br>
+        <input type="text"  id="area" placeholder="area" style="width: 200px; height: 25px;">
+        <br>
+        <p id="msg">Message</p>
+        
+    </body>
+</html>

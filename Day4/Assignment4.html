@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <script>
+            window.addEventListener('DOMContentLoaded',()=>
+            {
+                const calculate=document.querySelector("#calculate");
+                calculate.addEventListener('click',()=>
+                {
+                    let rectangle={length:document.querySelector("#length").value,
+                                    breadth:document.querySelector("#breadth").value,
+                                  }
+                    let perimeterarea = calperimeterarea(rectangle);
+
+                    if(document.querySelector("#ca").checked===true)
+                        document.querySelector("#area").innerHTML=perimeterarea.area;
+                    else
+                        document.querySelector("#area").innerHTML=" not selected";
+                    if(document.querySelector("#cp").checked===true)
+                        document.querySelector("#perimeter").innerHTML=perimeterarea.perimeter;
+                    else
+                        document.querySelector("#perimeter").innerHTML=" not selected";
+
+
+                });
+                function calperimeterarea(rectangle)
+                {
+                    let perimeterarea={};
+                    perimeterarea.area=rectangle.length*rectangle.breadth;
+                    perimeterarea.perimeter=2*(parseInt(rectangle.length)+parseInt(rectangle.breadth));
+                    return perimeterarea;
+                }
+
+            });
+        </script>
+    </head>
+    <body>
+        <input type="number" placeholder="length" id="length">
+        Area is <span id="area">x</span>
+        <br><input type="number" placeholder="breadth" id="breadth">
+        Perimeter is <span id="perimeter">y</span>
+        <br>Area <input type="checkbox"  id="ca">
+        Perimeter <input type="checkbox"  id="cp">
+        <br><input type="button" value="Calculate" id="calculate">
+
+
+
+    </body>
+</html>
+
+
+
+
